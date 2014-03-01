@@ -95,40 +95,40 @@ int main(void)
             }
         }
 
-            move(ball, velocity, angle);
-            GObject object = detectCollision(window, ball);
-            // bounce off right edge of window
-            if (getX(ball) + getWidth(ball) > 400)
-            {
-                
-                velocity = -velocity;
-            }
-
-            // bounce off left edge of window
-            else if (getX(ball) <= 0)
-            {
-                velocity = -velocity;
-            }
+        move(ball, velocity, angle);
+        GObject object = detectCollision(window, ball);
+        // bounce off right edge of window
+        if (getX(ball) + getWidth(ball) > 400)
+        {
             
-            else if(object == paddle)
-            {
-                angle = -angle;
-            }
-            else if(getY(ball) + getHeight(ball) > HEIGHT)
-            {
-                velocity = 0;
-                angle = 0;
-                lives -= 1;
-                break;
-                
-            }
-            else if (getY(ball) <= 0)
-            {
-                angle = -angle;
-            }
+            velocity = -velocity;
+        }
 
-            // linger before moving again
-            pause(5);
+        // bounce off left edge of window
+        else if (getX(ball) <= 0)
+        {
+            velocity = -velocity;
+        }
+        
+        else if(object == paddle)
+        {
+            angle = -angle;
+        }
+        else if(getY(ball) + getHeight(ball) > HEIGHT)
+        {
+            velocity = 0;
+            angle = 0;
+            lives -= 1;
+            break;
+            
+        }
+        else if (getY(ball) <= 0)
+        {
+            angle = -angle;
+        }
+
+        // linger before moving again
+        pause(5);
     }
 
     // wait for click before exiting
