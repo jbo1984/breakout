@@ -78,8 +78,7 @@ int main(void)
     double velocity = drand48();
     double angle = drand48()*1.5;
     while (lives > 0 && bricks > 0)
-    {
-        
+    {    
         // check for mouse event
         GEvent event = getNextEvent(MOUSE_EVENT);
 
@@ -95,11 +94,7 @@ int main(void)
                 setLocation(paddle, x, y);
             }
         }
-        
-        
-        //while(true)
-        //{
-            
+
             move(ball, velocity, angle);
             GObject object = detectCollision(window, ball);
             // bounce off right edge of window
@@ -123,18 +118,17 @@ int main(void)
             {
                 velocity = 0;
                 angle = 0;
+                lives -= 1;
+                break;
                 
             }
             else if (getY(ball) <= 0)
             {
                 angle = -angle;
             }
-            
 
             // linger before moving again
             pause(5);
-         //}
-                
     }
 
     // wait for click before exiting
