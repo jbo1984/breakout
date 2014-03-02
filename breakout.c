@@ -74,15 +74,15 @@ int main(void)
     // number of points initially
     int points = 0;
 
-    // keep playing until game over
-    double velocity = drand48();
+    // sets velocity and angle of ball
+    double velocity = drand48()*2;
     double angle = drand48()*1.5;
     
+    //Keeps playing till no bricks or lives are left
     
     while (lives > 0 && bricks > 0)
     {    
-        GEvent click = getNextEvent(MOUSE_EVENT);
-        
+
         // check for mouse event
         GEvent event = getNextEvent(MOUSE_EVENT);
 
@@ -98,45 +98,42 @@ int main(void)
                 setLocation(paddle, x, y);
             }
         }
-
-        move(ball, velocity, angle);
-        GObject object = detectCollision(window, ball);
-        // bounce off right edge of window
-        if (click != NULL)
-        {
-            if (getX(ball) + getWidth(ball) > 400)
-            {
+        
+        
+                move(ball, velocity, angle);
+                GObject object = detectCollision(window, ball);
+                // bounce off right edge of window
+                if (getX(ball) + getWidth(ball) > 400)
+                {
+                    
+                    velocity = -velocity;
+                }
+                // bounce off left edge of window
+                else if (getX(ball) <= 0)
+                {
+                    velocity = -velocity;
+                }
                 
-                velocity = -velocity;
-            }
+                else if(object == paddle)
+                {
+                    angle = -angle;
+                }
+                else if(getY(ball) + getHeight(ball) > HEIGHT)
+                {
+                    velocity = 0;
+                    angle = 0;
+                    lives -= 1;
+                    //break; 
+                }
+                else if (getY(ball) <= 0)
+                {
+                    angle = -angle;
+                }
 
-            // bounce off left edge of window
-            else if (getX(ball) <= 0)
-            {
-                velocity = -velocity;
-            }
-            
-            else if(object == paddle)
-            {
-                angle = -angle;
-            }
-            else if(getY(ball) + getHeight(ball) > HEIGHT)
-            {
-                velocity = 0;
-                angle = 0;
-                lives -= 1;
-                //break;
-                
-            }
-            else if (getY(ball) <= 0)
-            {
-                angle = -angle;
-            }
-
-            // linger before moving again
-            pause(5);
+                // linger before moving again
+                pause(5);
         }
-    }
+    
 
     // wait for click before exiting
     waitForClick();
