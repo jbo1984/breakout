@@ -73,10 +73,11 @@ int main(void)
 
     // number of points initially
     int points = 0;
-
+    
+    
     // keep playing until game over
     double velocity = drand48()*2;
-    double angle = drand48()*1.5;
+    double angle = drand48()*3;
     while (lives > 0 && bricks > 0)
     {    
         // check for mouse event
@@ -117,11 +118,10 @@ int main(void)
         //Detects if it hits the bottom of the screen
         else if(getY(ball) + getHeight(ball) > HEIGHT)
         {
-            velocity = 0;
-            angle = 0;
-            lives -= 1;
-            //break;
-            
+            removeGWindow(window, ball);
+            waitForClick();
+            ball = initBall(window);
+            lives -= 1;   
         }
         else if (getY(ball) <= 0)
         {
@@ -131,8 +131,17 @@ int main(void)
         {
             angle = -angle;
             removeGWindow(window, object);
+            initScoreboard(window);
+            updateScoreboard(window,initScoreboard(window) , points);
+            
+            points += 1;
+            if(points == 15)
+            {
+                break;
+            }
+            
         }
-
+        
         // linger before moving again
         pause(5);
     }
@@ -201,8 +210,10 @@ GRect initPaddle(GWindow window)
  */
 GLabel initScoreboard(GWindow window)
 {
-    // TODO
-    return NULL;
+    GLabel label = newGLabel("");
+    setFont(label, "SansSerif-36");
+    add(window, label);
+    return label;
 }
 
 /**
