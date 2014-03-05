@@ -132,10 +132,10 @@ int main(void)
             angle = -angle;
             removeGWindow(window, object);
             initScoreboard(window);
-            updateScoreboard(window,initScoreboard(window) , points);
+            updateScoreboard(window, label, points);
             
             points += 1;
-            if(points == 15)
+            if(points == 50)
             {
                 break;
             }
